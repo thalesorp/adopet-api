@@ -1,6 +1,6 @@
 # AdoPet
 
-Project developed for the 6th back-end challenge given by [Alura](https://www.alura.com.br/challenges/back-end-6).
+Project developed for the 6th back-end challenge given by [Alura](https://www.alura.com.br/challenges/back-end-6). #AluraChallenges
 
 AdoPet is a web application that connects would-be pet guardians with NGOs working to find a new home for animals for adoption.
 
