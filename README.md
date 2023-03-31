@@ -6,6 +6,8 @@ AdoPet is a web application that connects would-be pet guardians with NGOs worki
 
 This repository contains the source code of the REST API developed in Java with the Spring Boot 3 framework, which provides services to the AdoPet application.
 
+For the front-end part of the project, please refer to the [AdoPet Front-end repository](https://github.com/sucodelarangela/adopet).
+
 
 ## Features
 
