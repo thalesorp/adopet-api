@@ -4,7 +4,7 @@ Project developed for the 6th back-end challenge given by [Alura](https://www.al
 
 **AdoPet** is a web application that connects would-be pet guardians with NGOs working to find a new home for animals for adoption.
 
-This repository contains the source code of the REST API developed in Java with the Spring Boot 3 framework, which provides services to the AdoPet application. For the front-end part of the project, please refer to the [AdoPet front end repository](https://github.com/sucodelarangela/adopet) by [Angela Caldas](https://github.com/sucodelarangela).
+This repository contains the source code of the REST API developed in Java with the Spring Boot 3 framework, which provides services to the AdoPet application. For the front end part of the project, please refer to the [AdoPet front end repository](https://github.com/sucodelarangela/adopet) by [Angela Caldas](https://github.com/sucodelarangela).
 
 
 ## 💡 Features
