@@ -46,6 +46,20 @@ public class User {
         this.address = new Address();
     }
 
+    public User(User user) {
+        this.id = user.getId();
+        this.name = user.getName();
+        this.email = user.getEmail();
+        this.phone = user.getPhone();
+        this.about = user.getAbout();
+        this.role = user.getRole();
+        if (user.getAddress() == null){
+            this.address = new Address();
+        } else {
+            this.address = user.getAddress();
+        }
+    }
+
     public void updateData(@Valid UserUpdateData userData) {
         if (userData.name() != null) { this.name = userData.name(); }
         if (userData.email() != null) { this.email = userData.email(); }

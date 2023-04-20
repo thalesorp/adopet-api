@@ -14,11 +14,11 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import adopet.api.user.User;
 import adopet.api.user.UserData;
 import adopet.api.user.UserListData;
-import adopet.api.user.UserRegistratedData;
 import adopet.api.user.UserRegistrationData;
 import adopet.api.user.UserRepository;
 import adopet.api.user.UserType;
@@ -33,13 +33,14 @@ public class GuardianController {
     private UserRepository userRepository;
 
     @PostMapping @Transactional
-    public ResponseEntity<Object> create(@RequestBody @Valid UserRegistrationData userData) {
+    public ResponseEntity<Object> create(@RequestBody @Valid UserRegistrationData userData, UriComponentsBuilder uriBuilder) {
         if (!userData.password().equals(userData.passwordConfirmation())) {
             return ResponseEntity.badRequest().body("The password and password confirmation fields do not match");
         }
         var user = new User(userData, UserType.GUARDIAN);
         userRepository.save(user);
-        return ResponseEntity.ok(new UserRegistratedData(user));
+        var uri = uriBuilder.path("/guardians/{id}").buildAndExpand(user.getId()).toUri();
+        return ResponseEntity.created(uri).body(new UserData(user));
     }
 
     @DeleteMapping("/{id}") @Transactional
@@ -62,13 +63,7 @@ public class GuardianController {
         if (user == null){
             return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
         }
-        /* Erro na linha abaixo!
-         * Se utilizar a classe "UserData", que possui um atributo "AddressData", recebo o erro:
-         * "Cannot invoke \"adopet.api.address.Address.getStreet()\" because \"address\" is null"
-        */
-        var userData = new UserListData(user);
-        //var userData = new UserData(user);
-        return new ResponseEntity<>(userData, HttpStatus.OK);
+        return new ResponseEntity<>(new UserData(new User(user)), HttpStatus.OK);
     }
 
     @PutMapping @Transactional
@@ -79,7 +74,7 @@ public class GuardianController {
         }
         user = userRepository.getReferenceById(userData.id());
         user.updateData(userData);
-        return ResponseEntity.ok(new UserData(user));
+        return ResponseEntity.ok(new UserData(new User(user)));
     }
 
 }

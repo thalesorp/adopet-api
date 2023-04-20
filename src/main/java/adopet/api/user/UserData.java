@@ -4,6 +4,7 @@ import adopet.api.address.AddressData;
 import jakarta.validation.Valid;
 
 public record UserData(
+    Long id,
     String name,
     String email,
     String phone,
@@ -13,6 +14,7 @@ public record UserData(
 
     public UserData(User user) {
         this(
+            user.getId(),
             user.getName(),
             user.getEmail(),
             user.getPhone(),
@@ -24,6 +26,7 @@ public record UserData(
 
     public UserData(@Valid UserUpdateData user) {
         this(
+            user.id(),
             user.name(),
             user.email(),
             user.phone(),
