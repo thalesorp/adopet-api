@@ -1,17 +1,27 @@
 package adopet.api.user;
 
-import jakarta.persistence.*;
+import adopet.api.address.Address;
+import jakarta.persistence.Embedded;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Table(name = "users")
-@Entity(name = "User")
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Entity
+@Table(name = "users")
 @EqualsAndHashCode(of = "id")
 public class User {
 
@@ -20,20 +30,29 @@ public class User {
     private String name;
     private String email;
     private String password;
+    private String phone;
+    private String about;
+    @Enumerated(EnumType.STRING)
+    private UserType role;
+    @Embedded
+    private Address address;
 
-    public User(UserRegistrationData userData) {
+    public User(UserRegistrationData userData, UserType role) {
         this.name = userData.name();
         this.email = userData.email();
         this.password = userData.password();
+        this.phone = null;
+        this.role = role;
+        this.address = new Address();
     }
 
     public void updateData(@Valid UserUpdateData userData) {
-        if (userData.name() != null) {
-            this.name = userData.name();
-        }
-        if (userData.email() != null) {
-        this.email = userData.email();
-        }
+        if (userData.name() != null) { this.name = userData.name(); }
+        if (userData.email() != null) { this.email = userData.email(); }
+        if (userData.phone() != null) { this.phone = userData.phone(); }
+        if (userData.about() != null) { this.about = userData.about(); }
+        if (userData.role() != null) { this.role = userData.role(); }
+        if (userData.address() != null) { new Address(userData.address()); }
     }
 
 }

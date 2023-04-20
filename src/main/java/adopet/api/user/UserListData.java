@@ -6,7 +6,11 @@ public record UserListData(
     String email) {
 
     public UserListData(User user) {
-        this(user.getId(), user.getName(), user.getEmail());
+        this(
+            user.getId(),
+            user.getName(),
+            user.getEmail()
+        );
     }
 
 }
