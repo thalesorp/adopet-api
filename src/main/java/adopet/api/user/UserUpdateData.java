@@ -5,7 +5,8 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Digits;
 
 public record UserUpdateData(
-    @NotNull Long id,
+    @NotNull
+    Long id,
     String name,
     String email,
     @Digits(integer = 11, fraction = 0)

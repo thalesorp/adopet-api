@@ -52,7 +52,7 @@ public class User {
         if (userData.phone() != null) { this.phone = userData.phone(); }
         if (userData.about() != null) { this.about = userData.about(); }
         if (userData.role() != null) { this.role = userData.role(); }
-        if (userData.address() != null) { new Address(userData.address()); }
+        if (userData.address() != null) { this.address = new Address(userData.address()); }
     }
 
 }

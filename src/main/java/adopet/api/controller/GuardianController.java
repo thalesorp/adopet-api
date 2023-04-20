@@ -79,7 +79,7 @@ public class GuardianController {
         }
         user = userRepository.getReferenceById(userData.id());
         user.updateData(userData);
-        return ResponseEntity.ok(new UserData(userData));
+        return ResponseEntity.ok(new UserData(user));
     }
 
 }
