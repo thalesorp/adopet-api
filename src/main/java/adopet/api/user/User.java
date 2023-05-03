@@ -1,6 +1,10 @@
 package adopet.api.user;
 
+import java.util.List;
+
 import adopet.api.address.Address;
+import adopet.api.pet.Pet;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -8,6 +12,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -36,6 +41,10 @@ public class User {
     private UserType role;
     @Embedded
     private Address address;
+    @OneToMany(mappedBy = "shelter",
+               orphanRemoval = true,
+               cascade = CascadeType.ALL)
+    private List<Pet> pets;
 
     public User(UserRegistrationData userData, UserType role) {
         this.name = userData.name();
