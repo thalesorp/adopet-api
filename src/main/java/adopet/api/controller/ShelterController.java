@@ -26,8 +26,8 @@ import adopet.api.user.UserUpdateData;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("guardians")
-public class GuardianController {
+@RequestMapping("shelters")
+public class ShelterController {
 
     @Autowired
     private UserRepository userRepository;
@@ -37,17 +37,17 @@ public class GuardianController {
         if (!userData.password().equals(userData.passwordConfirmation())) {
             return ResponseEntity.badRequest().body("The password and password confirmation fields do not match");
         }
-        var user = new User(userData, UserType.GUARDIAN);
+        var user = new User(userData, UserType.SHELTER);
         userRepository.save(user);
-        var uri = uriBuilder.path("/guardians/{id}").buildAndExpand(user.getId()).toUri();
+        var uri = uriBuilder.path("/shelters/{id}").buildAndExpand(user.getId()).toUri();
         return ResponseEntity.created(uri).body(new UserData(user));
     }
 
     @DeleteMapping("/{id}") @Transactional
     public ResponseEntity<String> delete(@PathVariable Long id) {
         var user = userRepository.findById(id).orElse(null);
-        if ((user == null) || (user.getRole() != UserType.GUARDIAN)) {
-            return new ResponseEntity<>("Guardian not found", HttpStatus.NOT_FOUND);
+        if ((user == null) || (user.getRole() != UserType.SHELTER)) {
+            return new ResponseEntity<>("Shelter not found", HttpStatus.NOT_FOUND);
         }
         userRepository.deleteById(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -58,14 +58,14 @@ public class GuardianController {
         if (userRepository.count() == 0) {
             return ResponseEntity.noContent().build();
         }
-        return ResponseEntity.ok(userRepository.findAllByRole(UserType.GUARDIAN, pages).map(UserListData::new));
+        return ResponseEntity.ok(userRepository.findAllByRole(UserType.SHELTER, pages).map(UserListData::new));
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Object> get(@PathVariable Long id) {
         var user = userRepository.findById(id).orElse(null);
-        if ((user == null) || (user.getRole() != UserType.GUARDIAN)) {
-            return new ResponseEntity<>("Guardian not found", HttpStatus.NOT_FOUND);
+        if ((user == null) || (user.getRole() != UserType.SHELTER)) {
+            return new ResponseEntity<>("Shelter not found", HttpStatus.NOT_FOUND);
         }
         return new ResponseEntity<>(new UserData(new User(user)), HttpStatus.OK);
     }
@@ -73,8 +73,8 @@ public class GuardianController {
     @PutMapping @Transactional
     public ResponseEntity<Object> update(@RequestBody @Valid UserUpdateData userData) {
         var user = userRepository.findById(userData.id()).orElse(null);
-        if ((user == null) || (user.getRole() != UserType.GUARDIAN)) {
-            return new ResponseEntity<>("Guardian not found", HttpStatus.NOT_FOUND);
+        if ((user == null) || (user.getRole() != UserType.SHELTER)) {
+            return new ResponseEntity<>("Shelter not found", HttpStatus.NOT_FOUND);
         }
         user = userRepository.getReferenceById(userData.id());
         user.updateData(userData);
