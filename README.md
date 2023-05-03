@@ -15,7 +15,7 @@ The AdoPet API provides the following endpoints for interacting with the platfor
 
     - `POST /guardians`: Creates a new guardian. Request body example:
 
-        ```
+        ```JSON
         {
             "name": "Fulano",
             "email": "fulano@email.com",
@@ -26,7 +26,7 @@ The AdoPet API provides the following endpoints for interacting with the platfor
 
         - `201 Created`: The guardian was created sucessfully. The response body will contain a JSON with the newly created guardian data, and the response header will contain a location indicating the URL of the newly created resource. Response body example:
 
-            ```
+            ```JSON
             {
                 "id": 1,
                 "name": "Fulano",
