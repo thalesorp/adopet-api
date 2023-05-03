@@ -11,35 +11,125 @@ This repository contains the source code of the REST API developed in Java with 
 
 The AdoPet API provides the following endpoints for interacting with the platform:
 
-- `POST /users`: Creates a new user.
+- Guardians CRUD:
 
-    - `200 OK`: Returns a JSON containing the newly created user data.
+    - `POST /guardians`: Creates a new guardian. Request body example:
 
-    - `400 Bad Request`: If the password and password confirmation fields do not match.
+        ```
+        {
+            "name": "Fulano",
+            "email": "fulano@email.com",
+            "password": "abcd1234",
+            "passwordConfirmation": "abcd1234"
+        }
+        ```
 
-- `GET /users`: Returns a list of all users.
+        - `201 Created`: The guardian was created sucessfully. The response body will contain a JSON with the newly created guardian data, and the response header will contain a location indicating the URL of the newly created resource. Response body example:
 
-    - `200 OK`: Returns a pageable object containing a list of users data.
+            ```
+            {
+                "id": 1,
+                "name": "Fulano",
+                "email": "fulano@email.com",
+                "phone": null,
+                "about": null,
+                "role": "GUARDIAN",
+                "address": {
+                    "street": null,
+                    "complement": null,
+                    "city": null,
+                    "state": null,
+                    "postalCode": null,
+                    "country": null
+                }
+            }
+            ```
 
-    - `204 No Content`: If there are no users in the database.
+        - `400 Bad Request`: If the password and password confirmation fields do not match.
 
-- `GET /users/{id}`: Returns a specific user by an identifier.
+    - `GET /guardians`: Returns a list of all guardians.
 
-    - `200 OK`: Returns a JSON containing the requested user data.
+        - `200 OK`: Returns a pageable object containing a list of guardians data.
 
-    - `404 Not Found`: If the user with the specified identifier does not exist.
+        - `204 No Content`: If there are no guardians in the database.
 
-- `PUT /users`: Updates an existing user.
+    - `GET /guardians/{id}`: Returns a specific guardian by an identifier.
 
-    - `200 OK` : Returns a JSON containing the updated user data.
+        - `200 OK`: Returns a JSON containing the requested guardian data.
 
-    - `404 Not Found`: If the user with the specified identifier does not exist.
+        - `404 Not Found`: If the guardian with the specified identifier does not exist.
 
-- `DELETE /users/{id}`: Deletes an existing user.
+    - `PUT /guardians`: Updates an existing guardian.
 
-    - `200 OK`: If the user was deleted successfully.
+        - `200 OK` : Returns a JSON containing the updated guardian data.
 
-    - `404 Not Found`: If the user with the specified identifier does not exist.
+        - `404 Not Found`: If the guardian with the specified identifier does not exist.
+
+    - `DELETE /guardians/{id}`: Deletes an existing guardian.
+
+        - `200 OK`: The guardian was successfully deleted.
+
+        - `404 Not Found`: If the guardian with the specified identifier does not exist.
+
+- Shelters CRUD:
+
+    - `POST /shelters`: Creates a new shelter. Request body example:
+
+        ```
+        {
+            "name": "Pet Rescue",
+            "email": "petrescue@email.com",
+            "password": "1234abcd",
+            "passwordConfirmation": "1234abcd"
+        }
+        ```
+
+        - `201 Created`: The shelter was created sucessfully. The response body will contain a JSON with the newly created shelter data, and the response header will contain a location indicating the URL of the newly created resource. Response body example:
+
+            ```
+            {
+                "id": 2,
+                "name": "Pet Rescue",
+                "email": "petrescue@email.com",
+                "phone": null,
+                "about": null,
+                "role": "SHELTER",
+                "address": {
+                    "street": null,
+                    "complement": null,
+                    "city": null,
+                    "state": null,
+                    "postalCode": null,
+                    "country": null
+                }
+            }
+            ```
+
+        - `400 Bad Request`: If the password and password confirmation fields do not match.
+
+    - `GET /shelters`: Returns a list of all shelters.
+
+        - `200 OK`: Returns a pageable object containing a list of shelters data.
+
+        - `204 No Content`: If there are no shelters in the database.
+
+    - `GET /shelters/{id}`: Returns a specific shelter by an identifier.
+
+        - `200 OK`: Returns a JSON containing the requested shelter data.
+
+        - `404 Not Found`: If the shelter with the specified identifier does not exist.
+
+    - `PUT /shelters`: Updates an existing shelter.
+
+        - `200 OK` : Returns a JSON containing the updated shelter data.
+
+        - `404 Not Found`: If the shelter with the specified identifier does not exist.
+
+    - `DELETE /shelters/{id}`: Deletes an existing shelter.
+
+        - `200 OK`: The shelter was successfully deleted.
+
+        - `404 Not Found`: If the shelter with the specified identifier does not exist.
 
 
 ## ⚙️ How to Use
