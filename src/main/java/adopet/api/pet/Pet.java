@@ -9,17 +9,16 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
+import jakarta.validation.Valid;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
+@EqualsAndHashCode(of = "id")
 @Entity
 @Table(name = "pets")
-@EqualsAndHashCode(of = "id")
 public class Pet {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,8 +29,7 @@ public class Pet {
     private String temperament;
     private boolean adopted;
     private String imageURL;
-    @ManyToOne
-    @JoinColumn(name = "shelter_id")
+    @ManyToOne @JoinColumn(name = "shelter_id")
     private User shelter;
 
     public Pet(PetCreationData petData, User shelter) {
@@ -43,4 +41,18 @@ public class Pet {
         this.imageURL = petData.imageURL();
         this.shelter = shelter;
     }
+
+    public void updateData(@Valid PetUpdateData petData) {
+        if (petData.name() != null) { this.name = petData.name(); }
+        this.age = petData.age();
+        if (petData.size() != null) { this.size = petData.size(); }
+        if (petData.temperament() != null) { this.temperament = petData.temperament(); }
+        this.adopted = petData.adopted();
+        if (petData.imageURL() != null) { this.imageURL = petData.imageURL(); }
+    }
+
+    public void updateShelter(User shelter) {
+        this.shelter = shelter;
+    }
+
 }

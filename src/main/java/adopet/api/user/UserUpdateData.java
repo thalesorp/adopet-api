@@ -1,8 +1,11 @@
 package adopet.api.user;
 
+import java.util.List;
+
 import adopet.api.address.AddressData;
-import jakarta.validation.constraints.NotNull;
+import adopet.api.pet.PetData;
 import jakarta.validation.constraints.Digits;
+import jakarta.validation.constraints.NotNull;
 
 public record UserUpdateData(
     @NotNull
@@ -13,7 +16,8 @@ public record UserUpdateData(
     String phone,
     String about,
     UserType role,
-    AddressData address
+    AddressData address,
+    List<PetData> pets
     ) {
 
 }

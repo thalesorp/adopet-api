@@ -1,5 +1,6 @@
 package adopet.api.user;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import adopet.api.address.Address;
@@ -15,19 +16,15 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.Valid;
-import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
-@AllArgsConstructor
+@EqualsAndHashCode(of = "id")
 @Entity
 @Table(name = "users")
-@EqualsAndHashCode(of = "id")
 public class User {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -66,6 +63,11 @@ public class User {
             this.address = new Address();
         } else {
             this.address = user.getAddress();
+        }
+        if (user.getPets() == null) {
+            this.pets = new ArrayList<Pet>();
+        } else {
+            this.pets = user.getPets();
         }
     }
 

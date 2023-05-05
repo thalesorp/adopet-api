@@ -7,7 +7,8 @@ public record PetData(
     String size,
     String temperament,
     boolean adopted,
-    String imageURL) {
+    String imageURL,
+    Long shelterId) {
 
     public PetData(Pet pet) {
         this(
@@ -17,7 +18,8 @@ public record PetData(
             pet.getSize(),
             pet.getTemperament(),
             pet.isAdopted(),
-            pet.getImageURL()
+            pet.getImageURL(),
+            pet.getShelter().getId()
         );
     }
 

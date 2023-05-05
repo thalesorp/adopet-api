@@ -1,7 +1,6 @@
 package adopet.api.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,52 +32,59 @@ public class ShelterController {
     private UserRepository userRepository;
 
     @PostMapping @Transactional
-    public ResponseEntity<Object> create(@RequestBody @Valid UserRegistrationData userData, UriComponentsBuilder uriBuilder) {
+    public ResponseEntity<?> create(@RequestBody @Valid UserRegistrationData userData, UriComponentsBuilder uriBuilder) {
         if (!userData.password().equals(userData.passwordConfirmation())) {
-            return ResponseEntity.badRequest().body("The password and password confirmation fields do not match");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("The password and password confirmation fields do not match");
+        }
+        if (userRepository.findByEmail(userData.email()).orElse(null) != null) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("This email is already registered");
         }
         var user = new User(userData, UserType.SHELTER);
         userRepository.save(user);
         var uri = uriBuilder.path("/shelters/{id}").buildAndExpand(user.getId()).toUri();
-        return ResponseEntity.created(uri).body(new UserData(user));
-    }
-
-    @DeleteMapping("/{id}") @Transactional
-    public ResponseEntity<String> delete(@PathVariable Long id) {
-        var user = userRepository.findById(id).orElse(null);
-        if ((user == null) || (user.getRole() != UserType.SHELTER)) {
-            return new ResponseEntity<>("Shelter not found", HttpStatus.NOT_FOUND);
-        }
-        userRepository.deleteById(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }
-
-    @GetMapping
-    public ResponseEntity<Page<Object>> list(Pageable pages) {
-        if (userRepository.count() == 0) {
-            return ResponseEntity.noContent().build();
-        }
-        return ResponseEntity.ok(userRepository.findAllByRole(UserType.SHELTER, pages).map(UserListData::new));
+        return ResponseEntity.status(HttpStatus.CREATED).location(uri).body(new UserData(new User(user)));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Object> get(@PathVariable Long id) {
-        var user = userRepository.findById(id).orElse(null);
-        if ((user == null) || (user.getRole() != UserType.SHELTER)) {
-            return new ResponseEntity<>("Shelter not found", HttpStatus.NOT_FOUND);
+    public ResponseEntity<?> get(@PathVariable Long id) {
+        var user = userRepository.findByIdAndRole(id, UserType.SHELTER).orElse(null);
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Shelter not found");
         }
-        return new ResponseEntity<>(new UserData(new User(user)), HttpStatus.OK);
+        return ResponseEntity.status(HttpStatus.OK).body(new UserData(new User(user)));
+    }
+
+    @GetMapping
+    public ResponseEntity<?> list(Pageable pages) {
+        if (userRepository.count() == 0) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(userRepository.findAllByRole(UserType.SHELTER, pages).map(UserListData::new));
     }
 
     @PutMapping @Transactional
-    public ResponseEntity<Object> update(@RequestBody @Valid UserUpdateData userData) {
-        var user = userRepository.findById(userData.id()).orElse(null);
-        if ((user == null) || (user.getRole() != UserType.SHELTER)) {
-            return new ResponseEntity<>("Shelter not found", HttpStatus.NOT_FOUND);
+    public ResponseEntity<?> update(@RequestBody @Valid UserUpdateData userData) {
+        var user = userRepository.findByIdAndRole(userData.id(), UserType.SHELTER).orElse(null);
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Shelter not found");
         }
-        user = userRepository.getReferenceById(userData.id());
+        if (!user.getEmail().equals(userData.email())) {
+            if (userRepository.findByEmail(userData.email()).orElse(null) != null) {
+                return ResponseEntity.status(HttpStatus.CONFLICT).body("This email is already registered");
+            }
+        }
         user.updateData(userData);
-        return ResponseEntity.ok(new UserData(new User(user)));
+        return ResponseEntity.status(HttpStatus.OK).body(new UserData(new User(user)));
+    }
+
+    @DeleteMapping("/{id}") @Transactional
+    public ResponseEntity<?> delete(@PathVariable Long id) {
+        var user = userRepository.findByIdAndRole(id, UserType.SHELTER).orElse(null);
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Shelter not found");
+        }
+        userRepository.deleteById(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
     }
 
 }

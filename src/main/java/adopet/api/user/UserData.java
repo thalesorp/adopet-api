@@ -1,6 +1,10 @@
 package adopet.api.user;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import adopet.api.address.AddressData;
+import adopet.api.pet.PetData;
 import jakarta.validation.Valid;
 
 public record UserData(
@@ -10,7 +14,8 @@ public record UserData(
     String phone,
     String about,
     UserType role,
-    AddressData address) {
+    AddressData address,
+    List<PetData> pets) {
 
     public UserData(User user) {
         this(
@@ -20,7 +25,8 @@ public record UserData(
             user.getPhone(),
             user.getAbout(),
             user.getRole(),
-            new AddressData(user.getAddress())
+            new AddressData(user.getAddress()),
+            user.getPets().stream().map(PetData::new).collect(Collectors.toList())
         );
     }
 
@@ -32,7 +38,8 @@ public record UserData(
             user.phone(),
             user.about(),
             user.role(),
-            user.address()
+            user.address(),
+            user.pets()
         );
     }
 
