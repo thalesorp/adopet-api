@@ -1,6 +1,5 @@
 package adopet.api.pet;
 
-
 import adopet.api.user.User;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -53,6 +52,10 @@ public class Pet {
 
     public void updateShelter(User shelter) {
         this.shelter = shelter;
+    }
+
+    public void updateAdoption(Boolean adopted) {
+        this.adopted = adopted;
     }
 
 }
