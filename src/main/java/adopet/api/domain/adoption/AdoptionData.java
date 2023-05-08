@@ -1,4 +1,4 @@
-package adopet.api.adoption;
+package adopet.api.domain.adoption;
 
 import java.time.LocalDate;
 

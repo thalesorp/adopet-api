@@ -1,4 +1,4 @@
-package adopet.api.user;
+package adopet.api.domain.user;
 
 public record UserListData(
     Long id,

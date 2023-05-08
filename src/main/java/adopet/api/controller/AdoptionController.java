@@ -14,13 +14,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import adopet.api.adoption.Adoption;
-import adopet.api.adoption.AdoptionCreationData;
-import adopet.api.adoption.AdoptionData;
-import adopet.api.adoption.AdoptionRepository;
-import adopet.api.pet.PetRepository;
-import adopet.api.user.UserRepository;
-import adopet.api.user.UserType;
+import adopet.api.domain.adoption.Adoption;
+import adopet.api.domain.adoption.AdoptionCreationData;
+import adopet.api.domain.adoption.AdoptionData;
+import adopet.api.domain.adoption.AdoptionRepository;
+import adopet.api.domain.pet.PetRepository;
+import adopet.api.domain.user.UserRepository;
+import adopet.api.domain.user.UserType;
 import jakarta.validation.Valid;
 
 @RestController
@@ -64,6 +64,7 @@ public class AdoptionController {
 
     @DeleteMapping("/{id}") @Transactional
     public ResponseEntity<?> delete(@PathVariable Long id) {
+        // TODO: Only users with role "shelter" can make this operation
         var adoption = adoptionRepository.findById(id).orElse(null);
         if (adoption == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Adoption not found");

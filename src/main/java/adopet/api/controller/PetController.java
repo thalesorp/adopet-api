@@ -17,14 +17,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import adopet.api.pet.Pet;
-import adopet.api.pet.PetCreationData;
-import adopet.api.pet.PetData;
-import adopet.api.pet.PetRepository;
-import adopet.api.pet.PetUpdateData;
-import adopet.api.user.User;
-import adopet.api.user.UserRepository;
-import adopet.api.user.UserType;
+import adopet.api.domain.pet.*;
+import adopet.api.domain.user.User;
+import adopet.api.domain.user.UserRepository;
+import adopet.api.domain.user.UserType;
 import jakarta.validation.Valid;
 
 @RestController

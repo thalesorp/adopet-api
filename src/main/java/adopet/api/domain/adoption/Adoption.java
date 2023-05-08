@@ -1,10 +1,9 @@
-package adopet.api.adoption;
-
+package adopet.api.domain.adoption;
 
 import java.time.LocalDate;
 
-import adopet.api.pet.Pet;
-import adopet.api.user.User;
+import adopet.api.domain.pet.Pet;
+import adopet.api.domain.user.User;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;

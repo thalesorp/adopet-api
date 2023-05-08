@@ -1,4 +1,4 @@
-package adopet.api.adoption;
+package adopet.api.domain.adoption;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

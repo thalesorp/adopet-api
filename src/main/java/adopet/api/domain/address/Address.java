@@ -1,4 +1,4 @@
-package adopet.api.address;
+package adopet.api.domain.address;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;

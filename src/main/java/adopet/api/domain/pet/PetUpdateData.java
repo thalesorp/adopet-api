@@ -1,4 +1,4 @@
-package adopet.api.pet;
+package adopet.api.domain.pet;
 
 import jakarta.validation.constraints.NotNull;
 

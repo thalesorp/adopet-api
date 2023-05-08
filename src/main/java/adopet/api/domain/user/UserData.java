@@ -1,10 +1,10 @@
-package adopet.api.user;
+package adopet.api.domain.user;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-import adopet.api.address.AddressData;
-import adopet.api.pet.PetData;
+import adopet.api.domain.address.AddressData;
+import adopet.api.domain.pet.PetData;
 import jakarta.validation.Valid;
 
 public record UserData(

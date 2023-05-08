@@ -1,4 +1,4 @@
-package adopet.api.user;
+package adopet.api.domain.user;
 
 import java.util.List;
 import java.util.Optional;

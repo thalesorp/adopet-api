@@ -1,10 +1,10 @@
-package adopet.api.user;
+package adopet.api.domain.user;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import adopet.api.address.Address;
-import adopet.api.pet.Pet;
+import adopet.api.domain.address.Address;
+import adopet.api.domain.pet.Pet;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;

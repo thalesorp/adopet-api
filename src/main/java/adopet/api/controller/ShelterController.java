@@ -15,13 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import adopet.api.user.User;
-import adopet.api.user.UserData;
-import adopet.api.user.UserListData;
-import adopet.api.user.UserRegistrationData;
-import adopet.api.user.UserRepository;
-import adopet.api.user.UserType;
-import adopet.api.user.UserUpdateData;
+import adopet.api.domain.user.*;
 import jakarta.validation.Valid;
 
 @RestController

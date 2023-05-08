@@ -1,6 +1,6 @@
-package adopet.api.pet;
+package adopet.api.domain.pet;
 
-import adopet.api.user.User;
+import adopet.api.domain.user.User;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;

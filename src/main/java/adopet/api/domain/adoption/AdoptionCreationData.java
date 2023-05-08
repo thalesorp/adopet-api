@@ -1,4 +1,4 @@
-package adopet.api.adoption;
+package adopet.api.domain.adoption;
 
 import java.time.LocalDate;
 
@@ -10,6 +10,5 @@ public record AdoptionCreationData(
     @NotNull Long petId,
     @NotNull Long guardianId,
     @DateTimeFormat(pattern = "yyyy-mm-dd") LocalDate date) {
-    //@DateTimeFormat(iso=DateTimeFormat.ISO.DATE) LocalDate date) {
 
 }

@@ -1,4 +1,4 @@
-package adopet.api.pet;
+package adopet.api.domain.pet;
 
 public record PetData(
     Long id,
